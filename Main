@@ -1,0 +1,376 @@
+using System;
+using System.IO;
+using System.Resources;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using Microsoft.VisualBasic;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace TicTacToe
+{
+    public partial class Form1 : Form
+    {
+        Boolean player1 = true; //// player1's turn or not 
+
+    Image x = Properties.Resources.x; /// Image for Player 1, in this case X 
+    Image o = Properties.Resources.o; /// Image for Player 2, in this case O 
+
+    string p1 = "Player 1"; /// default name for Player 1
+    string p2 = "Player 2"; /// default name for Player 2
+
+    int winp1 = 0;  /// score counter for Player 1 
+    int winp2 = 0;  /// score counter for Player 2
+
+    int drawcount = 0; /// counts how many field got clicked 
+    Boolean won = false; /// state if someone won 
+
+    public Form1()
+    {
+        InitializeComponent();
+        this.Icon = Properties.Resources.icon; /* Icon for Form */
+
+
+        p1 = Interaction.InputBox("Player 1","Playername",p1); /* Inputbox from VisualBasic to Enter a Name for Player 1 */
+        if (p1 == "") p1 = "Player 1";
+
+        p2 = Interaction.InputBox("Player 2","Playername",p2); /* Inputbox from VisualBasic to Enter a Name for Player 2 */
+        if (p2 == "") p2 = "Player 2";
+
+        turn.Text = p1;     /* shows text at the beginning whos turn it is, in this case Player 1 */
+        p1winstxt.Text = p1;    /* sets the name for the score table for Player 1 */
+        p2winstxt.Text = p2;    /* sets the name for the score table for Player 1 */
+
+    }
+
+
+
+
+    public void Playerstatus() /* checks whos turn it is */
+    {
+        if(player1 == true)
+        {
+            player1 = false;
+            turn.Text = p2;
+        }
+        else
+        {
+            player1 = true;
+            turn.Text = p1;
+        }
+        drawcount++;
+        Checkwin();
+
+    }
+
+    public void Checkwin() /* checks if someone won, if not then check if all buttons have been clicked */
+    {
+        if(ul.Image == x && uc.Image == x && ur.Image == x)
+        {
+            P1win();
+        }
+        else if(ul.Image == o && uc.Image == o && ur.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (ul.Image == x && cc.Image == x && br.Image == x)
+        {
+            P1win();
+        }
+        else if(ul.Image == o && cc.Image == o && br.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (ul.Image == x && cl.Image == x && bl.Image == x)
+        {
+            P1win();
+        }
+        else if (ul.Image == o && cl.Image == o && bl.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (uc.Image == x && cc.Image == x && bc.Image == x)
+        {
+            P1win();
+        }
+        else if(uc.Image == o && cc.Image == o && bc.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (ur.Image == x && cr.Image == x && br.Image == x)
+        {
+            P1win();
+        }
+        else if(ur.Image == o && cr.Image == o && br.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (ur.Image == x && cc.Image == x && bl.Image == x)
+        {
+            P1win();
+        }
+        else if(ur.Image == o && cc.Image == o && bl.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (cr.Image == x && cc.Image == x && cl.Image == x)
+        {
+            P1win();
+        }
+        else if(cr.Image == o && cc.Image == o && cl.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (bl.Image == x && bc.Image == x && br.Image == x)
+        {
+            P1win();
+        }
+        else if(bl.Image == o && bc.Image == o && br.Image == o)
+        {
+            P2win();
+        }
+        /*-------------------------------------------------------------------------------*/
+        if (drawcount == 9) /* checks if all 9 buttons have been clicked */
+        {
+            if (won == false)
+            {
+                tie();
+            }
+        }
+
+    }
+
+    private void ol_Click(object sender, EventArgs e)
+    {
+        if(player1 == true)
+        {
+            ul.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            ul.Image = o;
+            Playerstatus();
+        }
+
+        ul.Enabled = false;
+    }
+
+    private void om_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            uc.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            uc.Image = o;
+            Playerstatus();
+        }
+
+        uc.Enabled = false;
+
+    }
+
+    private void or_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            ur.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            ur.Image = o;
+            Playerstatus();
+        }
+
+        ur.Enabled = false;
+    }
+
+    private void ml_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            cl.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            cl.Image = o;
+            Playerstatus();
+        }
+
+        cl.Enabled = false;
+    }
+
+    private void mm_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            cc.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            cc.Image = o;
+            Playerstatus();
+        }
+
+        cc.Enabled = false;
+    }
+
+    private void mr_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            cr.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            cr.Image = o;
+            Playerstatus();
+        }
+
+        cr.Enabled = false;
+    }
+
+    private void ul_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            bl.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            bl.Image = o;
+            Playerstatus();
+        }
+
+        bl.Enabled = false;
+    }
+
+    private void um_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            bc.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            bc.Image = o;
+            Playerstatus();
+        }
+
+        bc.Enabled = false;
+    }
+
+    private void ur_Click(object sender, EventArgs e)
+    {
+        if (player1 == true)
+        {
+            br.Image = x;
+            Playerstatus();
+        }
+        else
+        {
+            br.Image = o;
+            Playerstatus();
+        }
+
+        br.Enabled = false;
+    }
+
+    public void P1win() /* Player 1 won */
+    {
+        MessageBox.Show(p1 + " won!");
+        foreach (Control c in Controls) /* disables all buttons */
+        {
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.Enabled = false;
+
+            }
+        }
+
+        res.Enabled = true; /* reactivates the reset button */
+        winp1++;
+        drawcount = 0;
+        p1wins.Text = winp1.ToString();
+        won = true;
+
+    }
+
+    public void P2win() /* Player 2 won */
+    {
+        MessageBox.Show(p2 + " won!");
+        foreach (Control c in Controls)
+        {
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.Enabled = false;
+
+            }
+        }
+
+        res.Enabled = true;
+        winp2++;
+        p2wins.Text = winp2.ToString();
+        drawcount = 0;
+        won = true;
+    }
+
+    public void Resetgame() /* resets the game */
+    {
+        turn.Text = p1;
+        player1 = true;
+
+        foreach (Control c in Controls)
+        {
+            Button b = c as Button;
+            if(b != null)
+            {
+                b.Enabled = true;
+                b.Image = null;
+            }
+        }
+    }
+
+    private void res_Click(object sender, EventArgs e)
+    {
+        Resetgame();
+    }
+
+    public void tie() /* MessageBox for Tie */
+    {
+        MessageBox.Show("Tie!");
+    }
+
+    private void resetscore_Click(object sender, EventArgs e) /* resets the score */
+    {
+        winp1 = 0;
+        winp2 = 0;
+
+        p1wins.Text = winp1.ToString();
+        p2wins.Text = winp1.ToString();
+    }
+
+  }
+}
